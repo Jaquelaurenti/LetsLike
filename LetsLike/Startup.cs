@@ -1,4 +1,3 @@
-using LetsLike.Configurations;
 using LetsLike.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +28,7 @@ namespace LetsLike
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // TODO - Setar o nosso contexto quando a aplicação for ao ar 
             services.AddDbContext<LetsLikeContext>(
               options => options.
               UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -40,8 +39,6 @@ namespace LetsLike
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LetsLike", Version = "v1" });
             });
 
-            // Adicionando as inversões de controle
-            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,9 +63,5 @@ namespace LetsLike
             });
         }
 
-        private static void RegisterServices(IServiceCollection services)
-        {
-            Factory.RegisterServices(services);
-        }
     }
 }
