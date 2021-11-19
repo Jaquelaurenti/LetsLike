@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LetsLike.Configurations;
+using Microsoft.AspNetCore.Http;
 
 namespace LetsLike
 {
@@ -33,13 +35,22 @@ namespace LetsLike
               options => options.
               UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            // TODO adicionar o contexto ao escopo inicial
+            services.AddDbContext<LetsLikeContext>();
+
+            //TODO indicando acessos ao HTTP Context para trabalhar com os retornos http
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LetsLike", Version = "v1" });
             });
 
-        }
+            // TODO adicionando a Inversão de controle criada na Classe Factory
+            RegisterServicesPrivate(services);
+
+        }    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,6 +72,12 @@ namespace LetsLike
             {
                 endpoints.MapControllers();
             });
+        }
+
+        // TODO método criado para instanciar a factory
+        private void RegisterServicesPrivate(IServiceCollection services)
+        {
+            Factory.RegisterServices(services);
         }
 
     }

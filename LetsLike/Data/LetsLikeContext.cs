@@ -12,8 +12,9 @@ namespace LetsLike.Data
     public class LetsLikeContext : DbContext
     {
         // TODO instancia das models 
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Projeto> Projetos { get; set; }
+        public DbSet<UsuarioLikeProjeto> UsuariosLikeProjetos { get; set; }
         public LetsLikeContext(DbContextOptions<LetsLikeContext> options) : base(options)
         {
 
@@ -33,7 +34,8 @@ namespace LetsLike.Data
         {
             // todo ApplyConfiguration aplica as configurações de entidade que criamos
             modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new ProjetoConfiguration());          
+            modelBuilder.ApplyConfiguration(new ProjetoConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioLikeProjetoConfiguration());
         }
     }
 }

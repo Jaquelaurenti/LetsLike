@@ -26,6 +26,7 @@ namespace LetsLike.Models
         public Usuario UsuarioCadastro { get; set; }
         [ForeignKey("ID_USUARIO_CADASTRO"), Required]
         public int IdUsuarioCadastro { get; set; }
+        public virtual ICollection<UsuarioLikeProjeto> ProjetoLikeUsuario { get; set; }
 
     }
 }

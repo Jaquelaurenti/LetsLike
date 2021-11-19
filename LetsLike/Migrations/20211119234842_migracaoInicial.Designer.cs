@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetsLike.Migrations
 {
     [DbContext(typeof(LetsLikeContext))]
-    [Migration("20211118234028_MigracaoInicial")]
-    partial class MigracaoInicial
+    [Migration("20211119234842_migracaoInicial")]
+    partial class migracaoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,6 +89,31 @@ namespace LetsLike.Migrations
                     b.ToTable("USUARIO");
                 });
 
+            modelBuilder.Entity("LetsLike.Models.UsuarioLikeProjeto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IdProjetoLike")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_PROJETO_LIKE");
+
+                    b.Property<int>("IdUsuarioLike")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_USUARIO_LIKE");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProjetoLike");
+
+                    b.HasIndex("IdUsuarioLike");
+
+                    b.ToTable("USUARIO_LIKE_PROJETO");
+                });
+
             modelBuilder.Entity("LetsLike.Models.Projeto", b =>
                 {
                     b.HasOne("LetsLike.Models.Usuario", "UsuarioCadastro")
@@ -101,9 +126,37 @@ namespace LetsLike.Migrations
                     b.Navigation("UsuarioCadastro");
                 });
 
+            modelBuilder.Entity("LetsLike.Models.UsuarioLikeProjeto", b =>
+                {
+                    b.HasOne("LetsLike.Models.Projeto", "ProjetoLike")
+                        .WithMany("ProjetoLikeUsuario")
+                        .HasForeignKey("IdProjetoLike")
+                        .HasConstraintName("FK_PROJETO_USUARIO_LIKE_PROJETO")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LetsLike.Models.Usuario", "UsuarioLike")
+                        .WithMany("UsuarioLikeProjeto")
+                        .HasForeignKey("IdUsuarioLike")
+                        .HasConstraintName("FK_USUARIO_USUARIO_LIKE_PROJETO")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProjetoLike");
+
+                    b.Navigation("UsuarioLike");
+                });
+
+            modelBuilder.Entity("LetsLike.Models.Projeto", b =>
+                {
+                    b.Navigation("ProjetoLikeUsuario");
+                });
+
             modelBuilder.Entity("LetsLike.Models.Usuario", b =>
                 {
                     b.Navigation("Projeto");
+
+                    b.Navigation("UsuarioLikeProjeto");
                 });
 #pragma warning restore 612, 618
         }

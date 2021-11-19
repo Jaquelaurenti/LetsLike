@@ -24,5 +24,6 @@ namespace LetsLike.Models
         public string Senha { get; set; }
         // TODO CRIADO VIRTUALMENTE PARA CONSEGUIRMOS VINCULAR O USUARIO AO PROJETO
         public virtual ICollection<Projeto> Projeto { get; set; }
+        public virtual ICollection<UsuarioLikeProjeto> UsuarioLikeProjeto { get; set; }
     }
 }
