@@ -15,6 +15,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using LetsLike.Configurations;
 using Microsoft.AspNetCore.Http;
+using System.Reflection;
+using System.IO;
 
 namespace LetsLike
 {
@@ -41,10 +43,16 @@ namespace LetsLike
             //TODO indicando acessos ao HTTP Context para trabalhar com os retornos http
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            // TODO setando o mapper da aplicação para indicar que vamos trabalhar com Automapper
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LetsLike", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gerador de Like de Projetos", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             // TODO adicionando a Inversão de controle criada na Classe Factory

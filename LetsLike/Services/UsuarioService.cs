@@ -15,6 +15,12 @@ namespace LetsLike.Services
         {
             _contexto = contexto;
         }
+
+        public IList<Usuario> FindAllUsuarios()
+        {
+            return _contexto.Usuarios.ToList();
+        }
+
         public Usuario SaveOrUpdate(Usuario usuario)
         {
             // TODO se eu estou salvando e atualizando no mesmo método 
