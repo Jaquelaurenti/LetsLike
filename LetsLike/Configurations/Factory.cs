@@ -15,6 +15,7 @@ namespace LetsLike.Configurations
 
             // TODO adicionar as referencias de services com as referencias de interfaces
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IProjetoService, ProjetoService>();
 
         }
     }

@@ -17,6 +17,7 @@ using LetsLike.Configurations;
 using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System.IO;
+using System.Text.Json.Serialization;
 
 namespace LetsLike
 {
@@ -46,7 +47,11 @@ namespace LetsLike
             // TODO setando o mapper da aplicação para indicar que vamos trabalhar com Automapper
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            // TODO adicionando o json, para serializar as AMARRAÇÕES entre as entidades
+            // relacionamentos de FK'S 
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gerador de Like de Projetos", Version = "v1" });

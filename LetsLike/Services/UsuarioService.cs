@@ -1,6 +1,7 @@
 ﻿using LetsLike.Data;
 using LetsLike.Interfaces;
 using LetsLike.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,9 @@ namespace LetsLike.Services
 
         public IList<Usuario> FindAllUsuarios()
         {
-            return _contexto.Usuarios.ToList();
+            return _contexto.Usuarios.Include(x => x.Projeto)
+                .ThenInclude(j => j.UsuarioCadastro)
+                .ToList();
         }
 
         public Usuario SaveOrUpdate(Usuario usuario)
