@@ -2,6 +2,7 @@
 using LetsLike.DTO;
 using LetsLike.Interfaces;
 using LetsLike.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,6 +15,8 @@ namespace LetsLike.Controllers
     [Produces("application/json")]
     [ApiController]
     [Route("api/[controller]")]
+  
+
     // [Authorize]
     public class ProjetoController : ControllerBase
     {
@@ -25,7 +28,8 @@ namespace LetsLike.Controllers
             _projetoService = projetoService;
             _mapper = mapper;
         }
-
+        
+        [EnableCors("CorsPolicyLetsCode")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,15 +68,6 @@ namespace LetsLike.Controllers
                 return NotFound(notfound);
             }
 
-        }
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ProjetoDto> Patch([FromBody] ProjetoDto value)
-        {
-            // TODO inserir o LIKEDOPROJETO 
-            // quando ele disparar o método de LIKE que deverá ser construido
-            // dentro da service de projeto
         }
     }
 }

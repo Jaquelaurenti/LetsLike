@@ -20,20 +20,7 @@ namespace LetsLike.Services
 
         public Projeto LikeProketo(UsuarioLikeProjeto like)
         {
-            
-
-
-            /*
-             TODO
-            verificar se o projeto recebido existe
-            se existir, adicionar +1 no likeContador
-            disparar o saveOrUpdate do Projeto
-            após isso
-            inserir a injeção de dependencia da ProjetoLikeUsuario
-            disparar o SaveOrUpdate da ProjetoLikeUsuario passando o parâmetro like
-            
-             
-             */
+            throw new NotImplementedException();
         }
 
         public Projeto SaveOrUpdate(Projeto projeto)
@@ -43,7 +30,7 @@ namespace LetsLike.Services
 
             if (_contexto.Usuarios.Any(e => e.Id.Equals(projeto.IdUsuarioCadastro)))
             {
-                // TODO
+
                 var estado = projeto.Id == 0 ? EntityState.Added : EntityState.Modified;
                 _contexto.Entry(projeto).State = estado;
                 _contexto.SaveChanges();
